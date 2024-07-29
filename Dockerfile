@@ -1,9 +1,9 @@
-FROM golang:latest as builder
+FROM docker.io/library/golang:latest as builder
 RUN mkdir /build
 RUN mkdir -p /etc/hivehome_exporter
 ADD . /build/
 WORKDIR /build
-RUN go get -d -v ./...
+RUN go mod tidy && go mod vendor
 RUN CGO_ENABLED=0 go build ./hivehome_exporter.go
 
 
